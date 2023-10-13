@@ -1,3 +1,6 @@
+import numpy as np
+import pandas as pd
+
 path_json = "../json/"
 path_data = "../data/"
 
@@ -18,4 +21,11 @@ def invert_one_to_many_dict(d):
     return result
 
 def apply_wordlist(text, func):
-    return ",".join([func(word) for word in text.split(",")])
+    if pd.isna(text):
+        return np.nan
+    else:
+        return ",".join([func(word) for word in text.split(",")])
+    
+
+def apply_word_level(series, func):
+    return series.apply(lambda x: apply_wordlist(x, func))
